@@ -1,5 +1,29 @@
 #include "cape-sde-display.dtsi"
 
+&dsi_nt36523n_lcd_144hz_video_cphy {
+        qcom,panel-supply-entries = <&dsi_panel_pwr_supply_extvdd>;
+        qcom,mdss-dsi-bl-pmic-control-type = "bl_ctrl_external";
+        qcom,mdss-dsi-bl-min-level = <13>;
+        qcom,mdss-dsi-bl-max-level = <2047>;
+        qcom,mdss-brightness-max-level = <255>;
+        qcom,platform-reset-gpio = <&tlmm 0 0>;
+	qcom,platform-te-gpio = <&tlmm 86 0>;
+        qcom,bias-enp-gpio = <&tlmm 61 0>;
+        qcom,bias-enn-gpio = <&tlmm 65 0>;
+};
+
+&dsi_nt36523n_lcd_144hz_hyper_video_cphy {
+        qcom,panel-supply-entries = <&dsi_panel_pwr_supply_extvdd>;
+        qcom,mdss-dsi-bl-pmic-control-type = "bl_ctrl_external";
+        qcom,mdss-dsi-bl-min-level = <13>;
+        qcom,mdss-dsi-bl-max-level = <2047>;
+        qcom,mdss-brightness-max-level = <255>;
+        qcom,platform-reset-gpio = <&tlmm 0 0>;
+	qcom,platform-te-gpio = <&tlmm 86 0>;
+        qcom,bias-enp-gpio = <&tlmm 61 0>;
+        qcom,bias-enn-gpio = <&tlmm 65 0>;
+};
+
 &dsi_r66451_amoled_cmd_cphy {
 	qcom,panel-supply-entries = <&dsi_panel_pwr_supply_extvdd>;
 	qcom,mdss-dsi-bl-pmic-control-type = "bl_ctrl_dcs";
@@ -94,7 +118,7 @@
 };
 
 &sde_dsi {
-	qcom,dsi-default-panel = <&dsi_r66451_amoled_120hz_cmd_cphy>;
+	qcom,dsi-default-panel = <&dsi_nt36523n_lcd_144hz_hyper_video_cphy>;
 };
 
 &dsi_r66451_amoled_cmd {
@@ -111,13 +135,25 @@
 };
 
 &qupv3_se4_spi {
-	focaltech@0 {
-		panel = <&dsi_r66451_amoled_cmd_cphy
-			&dsi_r66451_amoled_144hz_cmd_cphy
-			&dsi_r66451_amoled_144hz_video_cphy
-			&dsi_r66451_amoled_video_cphy
-			&dsi_r66451_amoled_120hz_cmd_cphy
-			&dsi_r66451_amoled_120hz_video_cphy>;
+	novatek@0 {
+		panel = <&dsi_nt36523n_lcd_144hz_hyper_video_cphy
+			&dsi_nt36523n_lcd_144hz_video_cphy>;
+	};
+};
+&qupv3_se2_i2c {
+	status = "ok";
+
+	#address-cells = <1>;
+	#size-cells = <0>;
+        ktz8866_bkl@11 {
+                compatible = "kinetic,ktz8866_bkl";
+                reg = <0x11>;
+                pinctrl-names = "bkl_active","bkl_suspend";
+                pinctrl-0 = <&bkl_init_active>;
+                pinctrl-1 = <&bkl_init_suspend>;
+                bkl,hwen-gpio = <&tlmm 62 0>;
+                bkl,enp-gpio = <&tlmm 61 0>;
+                bkl,enn-gpio = <&tlmm 65 0>;
 	};
 };
 
@@ -129,7 +165,11 @@
 					&dsi_r66451_amoled_144hz_video_cphy
 					&dsi_r66451_amoled_video_cphy
 					&dsi_r66451_amoled_120hz_cmd_cphy
+					&dsi_nt36523n_lcd_144hz_video_cphy
+					&dsi_nt36523n_lcd_144hz_hyper_video_cphy
 					&dsi_r66451_amoled_120hz_video_cphy>;
+				//	status= "disabled";
+
 		};
 	};
 };
