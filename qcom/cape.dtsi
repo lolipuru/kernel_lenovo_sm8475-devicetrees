@@ -16,8 +16,9 @@
 
 	#address-cells = <2>;
 	#size-cells = <2>;
-
-	chosen: chosen {
+       region_country = "PRC";
+       	
+       chosen: chosen {
 		bootargs = "console=ttyMSM0,115200n8 loglevel=6 kpti=0 log_buf_len=256K kernel.panic_on_rcu_stall=1 swiotlb=noforce loop.max_part=7 cgroup.memory=nokmem,nosocket pcie_ports=compat msm_rtb.filter=0x237 allow_mismatched_32bit_el0 kasan=off rcupdate.rcu_expedited=1 rcu_nocbs=0-7 ftrace_dump_on_oops pstore.compress=none cpufreq.default_governor=performance can.stats_timer=0 fsa4480_i2c.async_probe=1 slub_debug=- disable_dma32=on";
 		stdout-path = "/soc/qcom,qup_uart@99c000:115200n8";
 	};
@@ -26,14 +27,14 @@
 
 	ddr-regions { };
 
-	mem-offline {
+	/*mem-offline {
 		compatible = "qcom,mem-offline";
 		offline-sizes = <0x1 0x40000000 0x0 0x40000000>,
 				<0x1 0xc0000000 0x0 0x80000000>,
 				<0x2 0xc0000000 0x1 0x40000000>;
 		granule = <512>;
 		mboxes = <&qmp_aop 0>;
-	};
+	};*/
 
 	reserved_memory: reserved-memory { };
 
@@ -101,7 +102,6 @@
 			power-domains = <&CPU_PD1>;
 			power-domain-names = "psci";
 			qcom,freq-domain = <&cpufreq_hw 0 4>;
-			#cooling-cells = <2>;
 		};
 
 		CPU2: cpu@200 {
@@ -116,7 +116,6 @@
 			power-domains = <&CPU_PD2>;
 			power-domain-names = "psci";
 			qcom,freq-domain = <&cpufreq_hw 0 4>;
-			#cooling-cells = <2>;
 			L2_2: l2-cache {
 			      compatible = "arm,arch-cache";
 			      cache-level = <2>;
@@ -136,7 +135,6 @@
 			power-domains = <&CPU_PD3>;
 			power-domain-names = "psci";
 			qcom,freq-domain = <&cpufreq_hw 0 4>;
-			#cooling-cells = <2>;
 		};
 
 		CPU4: cpu@400 {
@@ -171,7 +169,6 @@
 			power-domains = <&CPU_PD5>;
 			power-domain-names = "psci";
 			qcom,freq-domain = <&cpufreq_hw 1 4>;
-			#cooling-cells = <2>;
 			L2_5: l2-cache {
 			      compatible = "arm,arch-cache";
 			      cache-level = <2>;
@@ -191,7 +188,6 @@
 			power-domains = <&CPU_PD6>;
 			power-domain-names = "psci";
 			qcom,freq-domain = <&cpufreq_hw 1 4>;
-			#cooling-cells = <2>;
 			L2_6: l2-cache {
 			      compatible = "arm,arch-cache";
 			      cache-level = <2>;
@@ -559,8 +555,6 @@
 		qcom,bt-reset-gpio = <&tlmm 81 0>; /* BT_EN */
 		qcom,bt-sw-ctrl-gpio = <&tlmm 82 0>; /* SW_CTRL */
 		qcom,xo-clk-gpio = <&tlmm 204 0>; /* XO */
-		mboxes = <&qmp_aop 0>;
-		qcom,vreg_ipa="s3e";
 
 		qcom,bt-vdd-io-supply = <&S10B>;  /* IO */
 		qcom,bt-vdd-aon-supply = <&S11B>;
@@ -580,10 +574,6 @@
 		qcom,bt-vdd-rfa1-config = <1900000 2040000 0 1>;
 		qcom,bt-vdd-rfa2-config = <1350000 2024000 0 1>;
 		qcom,bt-vdd-asd-config = <2800000 2800000 0 1>;
-
-		/* This read as part of ipa */
-		qcom,vreg_ipa-supply=<&S3E>;
-		qcom,vreg_ipa-config= <2200000 2200000 0 1>;
 	};
 
 	intc: interrupt-controller@17100000 {
@@ -614,7 +604,7 @@
 		interrupt-controller;
 		#interrupt-cells = <2>;
 		wakeup-parent = <&pdc>;
-		qcom,gpios-reserved = <28 29 30 31 36 37 38 39>;
+		qcom,gpios-reserved = <28 29 30 31>;
 	};
 
 	arch_timer: timer {
@@ -1134,7 +1124,6 @@
 		qcom,hyplog-enabled;
 		hyplog-address-offset = <0x410>;
 		hyplog-size-offset = <0x414>;
-		tmecrashdump-address-offset = <0x808a0000>;
 	};
 
 	qcom_qseecom: qseecom@c1700000 {
@@ -1929,8 +1918,6 @@
 		phy-names = "ufsphy";
 		#reset-cells = <1>;
 
-		qcom,prime-mask = <0x70>;
-		qcom,silver-mask = <0x0f>;
 		lanes-per-direction = <2>;
 		dev-ref-clk-freq = <0>; /* 19.2 MHz */
 		clock-names =
@@ -3082,8 +3069,6 @@
 		qcom,vdd-wlan-rfa2-config = <1350000 2040000 0 0 1>;
 		wlan-ant-switch-supply = <&L7E>;
 		qcom,wlan-ant-switch-config = <2800000 2800000 0 0 1>;
-		vdd-wlan-ipa-supply = <&S3E>;
-		qcom,vdd-wlan-ipa-config = <2200000 2200000 0 0 0>;
 
 		interconnects =
 		<&pcie_noc MASTER_PCIE_0 &pcie_noc SLAVE_ANOC_PCIE_GEM_NOC>,
@@ -3174,6 +3159,7 @@
 #include "cape-usb.dtsi"
 #include "cape-pcie.dtsi"
 #include "msm-rdbg.dtsi"
+#include "waipio-eva.dtsi"
 #include "ipcc-test.dtsi"
 
 &qupv3_se7_2uart {
@@ -3197,10 +3183,11 @@
 		rtc6226,vio-supply-voltage = <1800000 1800000>;
 	};
 
-	fsa4480: fsa4480@42 {
+	fsa4480: fsa4480@43 {
 		compatible = "qcom,fsa4480-i2c";
-		reg = <0x42>;
+		reg = <0x43>;
 	};
+
 };
 
 &pcie0_rp {
