@@ -150,6 +150,7 @@
 			qcom,swr-num-dev = <2>;
 			qcom,swr-clock-stop-mode0 = <1>;
 			swr_haptics: swr_haptics@f0170220 {
+				status = "disabled";
 				compatible = "qcom,pm8350b-swr-haptics";
 				reg = <0x01 0xf0170220>;
 				swr-slave-supply = <&hap_swr_slave_reg>;
@@ -329,10 +330,10 @@
 		qcom,cdc-vdd-mic-bias-voltage = <3296000 3296000>;
 		qcom,cdc-vdd-mic-bias-current = <30000>;
 
-		qcom,cdc-micbias1-mv = <1800>;
-		qcom,cdc-micbias2-mv = <1800>;
-		qcom,cdc-micbias3-mv = <1800>;
-		qcom,cdc-micbias4-mv = <1800>;
+		qcom,cdc-micbias1-mv = <2700>;
+		qcom,cdc-micbias2-mv = <2700>;
+		qcom,cdc-micbias3-mv = <2700>;
+		qcom,cdc-micbias4-mv = <2700>;
 
 		qcom,cdc-static-supplies = "cdc-vdd-rxtx",
 					   "cdc-vddio",
@@ -408,9 +409,16 @@
 			"VA DMIC1", "VA MIC BIAS3",
 			"VA DMIC2", "VA MIC BIAS1",
 			"VA DMIC3", "VA MIC BIAS1";
-		qcom,msm-mbhc-usbc-audio-supported = <0>;
-		qcom,msm-mbhc-hphl-swh = <1>;
-		qcom,msm-mbhc-gnd-swh = <1>;
+		qcom,msm-mbhc-usbc-audio-supported = <1>;
+		qcom,msm-mbhc-usbc-audio-supported-sub = <1>;
+		qcom,msm-mbhc-hphl-swh = <0>;
+		qcom,msm-mbhc-gnd-swh = <0>;
+
+		qcom,pri-mi2s-gpios = <&pri_mi2s_gpios>;
+		qcom,mi2s-audio-intf = <1>;
+
+
+		fsa4480-i2c-handle-sub = <&fsa4480_2>;
 
 		qcom,cdc-dmic01-gpios = <&cdc_dmic01_gpios>;
 		qcom,cdc-dmic23-gpios = <&cdc_dmic23_gpios>;
@@ -440,7 +448,14 @@
 				&tert_mi2s_sd0_sleep>;
 		#gpio-cells = <0>;
 	};
-
+	pri_mi2s_gpios: pri_mi2s_gpios_pinctrl {
+		compatible = "qcom,msm-cdc-pinctrl";
+		pinctrl-names = "aud_active", "aud_sleep";
+		pinctrl-0 = <&pri_mi2s_sck_active &pri_mi2s_ws_active
+		&pri_mi2s_sd0_active &pri_mi2s_sd1_active>;
+		pinctrl-1 = <&pri_mi2s_sck_sleep &pri_mi2s_ws_sleep
+		&pri_mi2s_sd0_sleep &pri_mi2s_sd1_sleep>;
+	};
 	wsa_swr_gpios: wsa_swr_clk_data_pinctrl {
 		compatible = "qcom,msm-cdc-pinctrl";
 		pinctrl-names = "aud_active", "aud_sleep";
@@ -518,11 +533,162 @@
 	};
 };
 
+&qupv3_se5_i2c{
+       status = "ok";
+       fsa4480_2: fsa4480_2@42 {
+               compatible = "qcom,fsa4480-i2c-2";
+               reg = <0x42>;
+       };
+};
+
+&tlmm {
+	cs35l45_irq_default: cs35l45_irq_default {
+		config {
+			pins="gpio172";
+			bias-pull-up;
+                        input-enable;
+			drive-strength=<2>;
+		};
+	};
+
+	cs35l45_irq_default_1: cs35l45_irq_default_1 {
+		config {
+			pins="gpio1";
+			bias-pull-up;
+			input-enable;
+			drive-strength=<2>;
+		};
+	};
+
+	fsa4480_logic_default: fsa4480_logic_default {
+		mux {
+			pins = "gpio90";
+			function = "gpio";
+		};
+
+		config {
+			pins = "gpio90";
+			drive-strength = <2>;   /* 2 mA */
+			bias-pullup;
+			output-low;
+		};
+	};
+	cs35l45_reset_active: cs35l45_reset_active {
+		mux {
+		        pins = "gpio123";
+		        function = "gpio";
+		};
+
+		config {
+		        pins = "gpio123";
+		        drive-strength = <16>;
+		        output-high;
+		};
+	};
+
+	cs35l45_reset_sleep: cs35l45_reset_sleep {
+		mux {
+		        pins = "gpio123";
+		        function = "gpio";
+		};
+
+		config {
+		        pins = "gpio123";
+		        drive-strength = <16>;
+		        bias-disable;
+		        output-low;
+		};
+	};
+};
+
+&qupv3_se13_i2c {
+	status = "ok";
+        qcom,clk-freq-out = <1000000>;
+	cs35l45_1: cs35l45@30 {
+		compatible = "cirrus,cs35l45";
+		reg = <0x30>;
+		//VA-supply = <&dummy_vreg>;
+		//VP-supply = <&dummy_vreg>;
+
+		interrupt-parent = <&tlmm>;
+		interrupts = <172 0x2008>;
+		//reset-gpios = <&tlmm 123 0>;
+
+		pinctrl-names="default","cs35l45_reset_active", "cs35l45_reset_sleep";
+		pinctrl-0= <&cs35l45_irq_default>;
+		pinctrl-1= <&cs35l45_reset_active>;
+		pinctrl-2= <&cs35l45_reset_sleep>;
+		sound-name-prefix = "SPK1";
+
+		cirrus,asp-sdout-hiz-ctrl = <0x3>;
+		cirrus,dsp-part-name = "spk1-cs35l45";
+		cirrus,fast-switch = "spk1_fast_switch_music.txt", "spk1_fast_switch_voicecall.txt", "spk1_fast_switch_ringtone.txt";
+
+		cirrus,gpio-ctrl1 {
+			gpio-ctrl = <0x02>;
+		};
+
+		cirrus,bst-bpe-inst-config {
+			bst-bpe-inst-thld = <0x1E 0x32 0x46 0x6E >;
+			bst-bpe-inst-ilim = <0x04 0x0C 0x14 0x3C>;
+			bst-bpe-inst-ss-ilim = <0x00 0x04 0x08 0x1C>;
+			bst-bpe-inst-atk-rate = <0x00 0x6 0x6 0x6>;
+			bst-bpe-inst-hold-time = <0x2 0x2 0x2 0x2 >;
+			bst-bpe-inst-rls-rate = <0x06 0x06 0x06 0x06 >;
+		};
+
+	};
+	cs35l45_2: cs35l45@31 {
+		compatible = "cirrus,cs35l45";
+		reg = <0x31>;
+		//VA-supply = <&dummy_vreg>;
+		//VP-supply = <&dummy_vreg>;
+
+		interrupt-parent = <&tlmm>;
+		interrupts = <1 0x2008>;
+
+		//reset-gpios = <&tlmm 123 0>;
+		pinctrl-names="default","cs35l45_reset_active", "cs35l45_reset_sleep";
+		pinctrl-0= <&cs35l45_irq_default_1>;
+                pinctrl-1= <&cs35l45_reset_active>;
+                pinctrl-2= <&cs35l45_reset_sleep>;
+		sound-name-prefix = "SPK2";
+
+		cirrus,asp-sdout-hiz-ctrl = <0x3>;
+		cirrus,dsp-part-name = "spk2-cs35l45";
+		cirrus,fast-switch = "spk2_fast_switch_music.txt", "spk2_fast_switch_voicecall.txt", "spk2_fast_switch_ringtone.txt";
+
+		cirrus,gpio-ctrl1 {
+			gpio-ctrl = <0x02>;
+		};
+
+		cirrus,bst-bpe-inst-config {
+			bst-bpe-inst-thld = <0x1E 0x32 0x46 0x6E >;
+			bst-bpe-inst-ilim = <0x04 0x0C 0x14 0x3C>;
+			bst-bpe-inst-ss-ilim = <0x00 0x04 0x08 0x1C>;
+			bst-bpe-inst-atk-rate = <0x00 0x6 0x6 0x6>;
+			bst-bpe-inst-hold-time = <0x2 0x2 0x2 0x2 >;
+			bst-bpe-inst-rls-rate = <0x06 0x06 0x06 0x06 >;
+		};
+
+	};
+};
+
 &va_cdc_dma_0_tx {
 	qcom,msm-dai-is-island-supported = <1>;
 };
 
 &soc {
+        fsa4480_logic_switch {
+                reg = <0 0>;
+                compatible = "shenqi,fsa4480_logic";
+                status = "ok";
+                fsa4480_logic-gpio = <&tlmm 90 0x0>;
+
+                pinctrl-names = "fsa4480_logic_default";
+                pinctrl-0 = <&fsa4480_logic_default>;
+        };
+
 	wsa_spkr_en1: wsa_spkr_en1_pinctrl {
 		compatible = "qcom,msm-cdc-pinctrl";
 		pinctrl-names = "aud_active", "aud_sleep";
