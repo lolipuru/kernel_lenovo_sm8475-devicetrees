@@ -2,7 +2,7 @@
 #include <dt-bindings/input/input.h>
 #include "cape-pmic-overlay.dtsi"
 #include "waipio-thermal-overlay.dtsi"
-
+#include "novatek-nt36xxx-spi.dtsi"
 &soc {
 	gpio_keys {
 		compatible = "gpio-keys";
@@ -37,7 +37,7 @@
 	pinctrl-0 = <&sdc2_on>;
 	pinctrl-1 = <&sdc2_off>;
 
-	cd-gpios = <&tlmm 92 GPIO_ACTIVE_LOW>;
+	cd-gpios = <&tlmm 92 GPIO_ACTIVE_HIGH>;
 };
 
 &ufsphy_mem {
@@ -86,12 +86,229 @@
 };
 
 &battery_charger {
-	qcom,thermal-mitigation = <3000000 1500000 1000000 500000>;
+	qcom,thermal-mitigation = <9000000 8000000 7000000 6000000 5500000 5000000 4000000 3000000 2500000 1500000 1000000 500000>;
 	qcom,wireless-fw-name = "idt9415.bin";
 };
 
-&qupv3_se9_i2c {
+&qupv3_se14_i2c {
 	status = "ok";
+	qcom,clk-freq-out = <1000000>;
+
+	haptic_hv_r@5A {
+		compatible = "awinic,haptic_hv_r";
+		reg = <0x5A>;
+		irq-gpio = <&tlmm 171 0>;//
+		reset-gpio = <&tlmm 142 0>;//142
+		pinctrl-names = "haptic_irq_r";
+		pinctrl-0 = <&haptic_irq_r>;
+		f0_pre = < 1700 >;
+		mode = /bits/ 8 < 5 >;
+		f0_cali_percent = /bits/ 8 < 7 >;
+/*******************************aw869x*******************************/
+		aw869x_cont_drv_lev = /bits/ 8 < 105 >;
+		aw869x_cont_drv_lvl_ov = /bits/ 8 < 125 >;
+		aw869x_cont_td = < 0x009A >;
+		aw869x_cont_zc_thr = < 0x0FF1 >;
+		aw869x_cont_num_brk = /bits/ 8 < 3 >;
+		aw869x_f0_coeff = < 260 >; /*Don't modify it 2.604167*/
+		aw869x_duration_time = /bits/ 8 < 20 30 60 >;
+		aw869x_f0_trace_parameter = /bits/ 8 < 0x05 0x03 0x02 0x0f >;
+		aw869x_bemf_config = /bits/ 8 < 0x10 0x08 0x03 0xf8 >;
+		aw869x_tset = /bits/ 8 < 0x12 >;
+		aw869x_r_spare = /bits/ 8 < 0x68 >;
+		aw869x_bstdbg = /bits/ 8 < 0x30 0xeb 0xd4 0 0 0 >;
+		aw869x_trig_config = /bits/ 8 < 0 1 1 1 2 0 1 1 1 2 0 1 1 1 2 >;
+		aw869x_bst_vol_default = < 8500 >;
+
+/******************************aw869xx*******************************/
+		aw869xx_gain_bypass = /bits/ 8 < 1 >;
+		aw869xx_brk_bst_md = /bits/ 8 < 0 >;
+		aw869xx_cont_drv1_lvl = /bits/ 8 < 0x7F >;
+		aw869xx_cont_lra_vrms = < 1000 >; /* Motor rated voltage, mV */
+		aw869xx_cont_brk_time = /bits/ 8 < 0x08 >;
+		aw869xx_cont_tset = /bits/ 8 < 0x06 >;
+		aw869xx_cont_bemf_set = /bits/ 8 < 0x02 >;
+		aw869xx_cont_wait_num = /bits/ 8 < 0x06 >;
+		aw869xx_cont_bst_brk_gain = /bits/ 8 < 0x05 >;
+		aw869xx_cont_brk_gain = /bits/ 8 < 0x08 >;
+		aw869xx_cont_drv1_time = /bits/ 8 < 0x04 >;
+		aw869xx_cont_drv2_time = /bits/ 8 < 0x14 >;
+		aw869xx_cont_track_margin = /bits/ 8 < 0x0F >;
+		aw869xx_duration_time = /bits/ 8 < 20 30 60 >;
+		aw869xx_sine_array = /bits/ 8 < 0x05 0xB2 0xFF 0xEF >;
+		aw869xx_d2s_gain = /bits/ 8 < 0x04 >;
+		aw869xx_bstcfg = /bits/ 8 < 0x20 0x24 0x96 0x40 0x11 >;
+		aw869xx_trig_config = /bits/ 8 < 0 0 0 1 0 2 0 0
+						 0 0 0 1 0 2 0 0
+						 0 0 0 1 0 2 0 0 >;
+		aw869xx_bst_vol_default = < 8500 >;
+		aw869xx_is_enabled_track_en;
+		/* aw869xx_is_enabled_auto_bst; */
+		/* aw869xx_is_enabled_i2s; */
+		/* aw869xx_is_enabled_one_wire; */
+
+/******************************aw8671x*******************************/
+		aw8671x_gain_bypass = /bits/ 8 < 1 >;
+		aw8671x_brk_bst_md = /bits/ 8 < 0 >;
+		aw8671x_cont_drv1_lvl = /bits/ 8 < 0x7F >;
+		aw8671x_cont_lra_vrms = < 1000 >; /* Motor rated voltage, mV */
+		aw8671x_cont_brk_time = /bits/ 8 < 0x08 >;
+		aw8671x_cont_tset = /bits/ 8 < 0x06 >;
+		aw8671x_cont_bemf_set = /bits/ 8 < 0x02 >;
+		aw8671x_cont_wait_num = /bits/ 8 < 0x06 >;
+		aw8671x_cont_bst_brk_gain = /bits/ 8 < 0x05 >;
+		aw8671x_cont_brk_gain = /bits/ 8 < 0x08 >;
+		aw8671x_cont_drv1_time = /bits/ 8 < 0x04 >;
+		aw8671x_cont_drv2_time = /bits/ 8 < 0x14 >;
+		aw8671x_cont_track_margin = /bits/ 8 < 0x0F >;
+		aw8671x_duration_time = /bits/ 8 < 20 30 60 >;
+		aw8671x_d2s_gain = /bits/ 8 < 0x04 >;
+		aw8671x_trig_config = /bits/ 8 < 0 0 0 1 0 2 0 0
+						 0 0 0 1 0 2 0 0
+						 0 0 0 1 0 2 0 0 >;
+		aw8671x_bst_vol_default = < 6336 >;
+		aw8671x_is_enabled_track_en;
+		/* aw8671x_is_enabled_auto_bst; */
+		/* aw8671x_is_enabled_i2s; */
+		/* aw8671x_is_enabled_one_wire; */
+
+/******************************aw8692x*******************************/
+		aw8692x_gain_bypass = /bits/ 8 < 1 >;
+		aw8692x_cont_drv1_lvl = /bits/ 8 < 0x7F >;
+		aw8692x_cont_lra_vrms = < 1000 >; /* Motor rated voltage, mV */
+		aw8692x_cont_drv1_time = /bits/ 8 < 0x04 >;
+		aw8692x_cont_drv2_time = /bits/ 8 < 0x10 >;
+		aw8692x_cont_wait_num = /bits/ 8 < 0x06 >;
+		aw8692x_cont_brk_time = /bits/ 8 < 0x08 >;
+		aw8692x_cont_track_margin = /bits/ 8 < 0x0F >;
+		aw8692x_brk_bst_md = /bits/ 8 < 0 >;
+		aw8692x_cont_tset = /bits/ 8 < 0x06 >;
+		aw8692x_cont_bemf_set = /bits/ 8 < 0x02 >;
+		aw8692x_cont_bst_brk_gain = /bits/ 8 < 0x05 >;
+		aw8692x_cont_brk_gain = /bits/ 8 < 0x08 >;
+		aw8692x_duration_time = /bits/ 8 < 20 30 60 >;
+		aw8692x_d2s_gain = /bits/ 8 < 0x04 >;
+		aw8692x_trig_config = /bits/ 8 < 0 0 0 1 0 2 0 0
+						 0 0 0 1 0 2 0 0
+						 0 0 0 1 0 2 0 0 >;
+		aw8692x_bst_vol_default = < 8000 >;
+		aw8692x_is_enabled_track_en;
+		/* aw8692x_is_enabled_auto_bst; */
+		/* aw8692x_is_enabled_one_wire; */
+	};
+};
+
+
+&qupv3_se11_i2c {
+        status = "ok";
+	qcom,clk-freq-out = <1000000>;
+
+	haptic_hv_l@5A {
+		compatible = "awinic,haptic_hv_l";
+		reg = <0x5A>;
+		irq-gpio = <&tlmm 38 0>;//38
+		reset-gpio = <&tlmm 39 0>;//39
+		pinctrl-names = "haptic_irq_l";
+		pinctrl-0 = <&haptic_irq_l>;
+		f0_pre = < 1700 >;
+		mode = /bits/ 8 < 5 >;
+		f0_cali_percent = /bits/ 8 < 7 >;
+/*******************************aw869x*******************************/
+		aw869x_cont_drv_lev = /bits/ 8 < 105 >;
+		aw869x_cont_drv_lvl_ov = /bits/ 8 < 125 >;
+		aw869x_cont_td = < 0x009A >;
+		aw869x_cont_zc_thr = < 0x0FF1 >;
+		aw869x_cont_num_brk = /bits/ 8 < 3 >;
+		aw869x_f0_coeff = < 260 >; /*Don't modify it 2.604167*/
+		aw869x_duration_time = /bits/ 8 < 20 30 60 >;
+		aw869x_f0_trace_parameter = /bits/ 8 < 0x05 0x03 0x02 0x0f >;
+		aw869x_bemf_config = /bits/ 8 < 0x10 0x08 0x03 0xf8 >;
+		aw869x_tset = /bits/ 8 < 0x12 >;
+		aw869x_r_spare = /bits/ 8 < 0x68 >;
+		aw869x_bstdbg = /bits/ 8 < 0x30 0xeb 0xd4 0 0 0 >;
+		aw869x_trig_config = /bits/ 8 < 0 1 1 1 2 0 1 1 1 2 0 1 1 1 2 >;
+		aw869x_bst_vol_default = < 8500 >;
+
+/******************************aw869xx*******************************/
+		aw869xx_gain_bypass = /bits/ 8 < 1 >;
+		aw869xx_brk_bst_md = /bits/ 8 < 0 >;
+		aw869xx_cont_drv1_lvl = /bits/ 8 < 0x7F >;
+		aw869xx_cont_lra_vrms = < 1000 >; /* Motor rated voltage, mV */
+		aw869xx_cont_brk_time = /bits/ 8 < 0x08 >;
+		aw869xx_cont_tset = /bits/ 8 < 0x06 >;
+		aw869xx_cont_bemf_set = /bits/ 8 < 0x02 >;
+		aw869xx_cont_wait_num = /bits/ 8 < 0x06 >;
+		aw869xx_cont_bst_brk_gain = /bits/ 8 < 0x05 >;
+		aw869xx_cont_brk_gain = /bits/ 8 < 0x08 >;
+		aw869xx_cont_drv1_time = /bits/ 8 < 0x04 >;
+		aw869xx_cont_drv2_time = /bits/ 8 < 0x14 >;
+		aw869xx_cont_track_margin = /bits/ 8 < 0x0F >;
+		aw869xx_duration_time = /bits/ 8 < 20 30 60 >;
+		aw869xx_sine_array = /bits/ 8 < 0x05 0xB2 0xFF 0xEF >;
+		aw869xx_d2s_gain = /bits/ 8 < 0x04 >;
+		aw869xx_bstcfg = /bits/ 8 < 0x20 0x24 0x96 0x40 0x11 >;
+		aw869xx_trig_config = /bits/ 8 < 0 0 0 1 0 2 0 0
+						 0 0 0 1 0 2 0 0
+						 0 0 0 1 0 2 0 0 >;
+		aw869xx_bst_vol_default = < 8500 >;
+		aw869xx_is_enabled_track_en;
+		/* aw869xx_is_enabled_auto_bst; */
+		/* aw869xx_is_enabled_i2s; */
+		/* aw869xx_is_enabled_one_wire; */
+
+/******************************aw8671x*******************************/
+		aw8671x_gain_bypass = /bits/ 8 < 1 >;
+		aw8671x_brk_bst_md = /bits/ 8 < 0 >;
+		aw8671x_cont_drv1_lvl = /bits/ 8 < 0x7F >;
+		aw8671x_cont_lra_vrms = < 1000 >; /* Motor rated voltage, mV */
+		aw8671x_cont_brk_time = /bits/ 8 < 0x08 >;
+		aw8671x_cont_tset = /bits/ 8 < 0x06 >;
+		aw8671x_cont_bemf_set = /bits/ 8 < 0x02 >;
+		aw8671x_cont_wait_num = /bits/ 8 < 0x06 >;
+		aw8671x_cont_bst_brk_gain = /bits/ 8 < 0x05 >;
+		aw8671x_cont_brk_gain = /bits/ 8 < 0x08 >;
+		aw8671x_cont_drv1_time = /bits/ 8 < 0x04 >;
+		aw8671x_cont_drv2_time = /bits/ 8 < 0x14 >;
+		aw8671x_cont_track_margin = /bits/ 8 < 0x0F >;
+		aw8671x_duration_time = /bits/ 8 < 20 30 60 >;
+		aw8671x_d2s_gain = /bits/ 8 < 0x04 >;
+		aw8671x_trig_config = /bits/ 8 < 0 0 0 1 0 2 0 0
+						 0 0 0 1 0 2 0 0
+						 0 0 0 1 0 2 0 0 >;
+		aw8671x_bst_vol_default = < 8500 >;
+		aw8671x_is_enabled_track_en;
+		/* aw8671x_is_enabled_auto_bst; */
+		/* aw8671x_is_enabled_i2s; */
+		/* aw8671x_is_enabled_one_wire; */
+
+/******************************aw8692x*******************************/
+		aw8692x_gain_bypass = /bits/ 8 < 1 >;
+		aw8692x_cont_drv1_lvl = /bits/ 8 < 0x7F >;
+		aw8692x_cont_lra_vrms = < 1000 >; /* Motor rated voltage, mV */
+		aw8692x_cont_drv1_time = /bits/ 8 < 0x04 >;
+		aw8692x_cont_drv2_time = /bits/ 8 < 0x10 >;
+		aw8692x_cont_wait_num = /bits/ 8 < 0x06 >;
+		aw8692x_cont_brk_time = /bits/ 8 < 0x08 >;
+		aw8692x_cont_track_margin = /bits/ 8 < 0x0F >;
+		aw8692x_brk_bst_md = /bits/ 8 < 0 >;
+		aw8692x_cont_tset = /bits/ 8 < 0x06 >;
+		aw8692x_cont_bemf_set = /bits/ 8 < 0x02 >;
+		aw8692x_cont_bst_brk_gain = /bits/ 8 < 0x05 >;
+		aw8692x_cont_brk_gain = /bits/ 8 < 0x08 >;
+		aw8692x_duration_time = /bits/ 8 < 20 30 60 >;
+		aw8692x_d2s_gain = /bits/ 8 < 0x04 >;
+		aw8692x_trig_config = /bits/ 8 < 0 0 0 1 0 2 0 0
+						 0 0 0 1 0 2 0 0
+						 0 0 0 1 0 2 0 0 >;
+		aw8692x_bst_vol_default = < 8000 >;
+		aw8692x_is_enabled_track_en;
+		/* aw8692x_is_enabled_auto_bst; */
+		/* aw8692x_is_enabled_one_wire; */
+	};
+};
+
+&qupv3_se9_i2c {
+	status = "disable";
 	qcom,clk-freq-out = <1000000>;
 	#address-cells = <1>;
 	#size-cells = <0>;
@@ -114,35 +331,6 @@
 	};
 };
 
-&qupv3_se4_spi {
-	status = "ok";
-
-	#address-cells = <1>;
-	#size-cells = <0>;
-	qcom,spi-touch-active = "focaltech,fts_ts";
-
-	focaltech@0 {
-		compatible = "focaltech,fts_ts";
-		reg = <0x0>;
-		spi-max-frequency = <6000000>;
-		interrupt-parent = <&tlmm>;
-		interrupts = <21 0x2008>;
-		focaltech,reset-gpio = <&tlmm 20 0x00>;
-		focaltech,irq-gpio = <&tlmm 21 0x2008>;
-		focaltech,display-coords = <0 0 1080 2340>;
-		focaltech,max-touch-number = <5>;
-		focaltech,ic-type = <0x3658D488>;
-		focaltech,touch-type = "primary";
-
-		vdd-supply = <&L3C>;
-
-		pinctrl-names = "pmx_ts_active", "pmx_ts_suspend", "pmx_ts_release";
-		pinctrl-0 = <&ts_active>;
-		pinctrl-1 = <&ts_int_suspend &ts_reset_suspend>;
-		pinctrl-2 = <&ts_release>;
-	};
-};
-
 &qupv3_se5_i2c {
 	status = "ok";
 
@@ -156,16 +344,30 @@
 		reset-gpio = <&pm8350c_gpios 7 GPIO_ACTIVE_HIGH>;
 		pinctrl-names = "default";
 		pinctrl-0 = <&eusb2_reset_ctrl_default>;
-		qcom,param-override-seq =
+		qcom,param-override-seq-c1 =
 				/* Rx squelch detection threshold to 110mV; default is 125mV */
-				<0x40 0x06
+				<0x44 0x06
 				/*
 				 * Tx Deemphasis to 2dB, Tx Deemphasis bit duration to 0.8UI;
 				 * default is 0 for both
 				 */
-				0x22 0x07
+				0x12 0x07
 				/* Output Voltage Swing to 500mV; default is 450mV */
-				0x63 0x08>;
+				0x65 0x08
+				0x02 0x09
+				0x03 0x0A>;
+		qcom,param-override-seq-c2 =
+                                /* Rx squelch detection threshold to 110mV; default is 125mV */
+                                <0x44 0x06
+                                /*
+                                 * Tx Deemphasis to 2dB, Tx Deemphasis bit duration to 0.8UI;
+                                 * default is 0 for both
+                                 */
+                                0x33 0x07
+                                /* Output Voltage Swing to 500mV; default is 450mV */
+                                0x66 0x08
+                                0x02 0x09
+				0x03 0x0A>;
 	};
 };
 
@@ -180,10 +382,17 @@
 	dwc3@a600000 {
 		usb-role-switch;
 	};
+	ports{
 
-	port {
-		usb_port0: endpoint {
-			remote-endpoint = <&usb_port0_connector>;
+		port@0 {
+			usb_port0: endpoint {
+				remote-endpoint = <&usb_port0_connector>;
+			};
+		};
+		port@1 {
+			usb_port1: endpoint {
+				remote-endpoint = <&usb_port1_connector>;
+			};
 		};
 	};
 };
@@ -193,6 +402,13 @@
 		port {
 			usb_port0_connector: endpoint {
 				remote-endpoint = <&usb_port0>;
+			};
+		};
+	};
+	connector1 {
+		port {
+			usb_port1_connector: endpoint {
+				remote-endpoint = <&usb_port1>;
 			};
 		};
 	};

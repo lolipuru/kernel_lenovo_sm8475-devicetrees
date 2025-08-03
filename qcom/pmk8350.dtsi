@@ -194,6 +194,14 @@
 			#size-cells = <1>;
 		};
 
+		pm8350_adc_tm_iio: adc_tm@3500 {
+			compatible = "qcom,adc-tm7-iio";
+			reg = <0x3400>;
+			#thermal-sensor-cells = <1>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+		};
+
 		pmk8350_sdam_2: sdam@7100 {
 			compatible = "qcom,spmi-sdam";
 			reg = <0x7100>;

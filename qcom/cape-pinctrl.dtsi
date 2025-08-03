@@ -1374,6 +1374,18 @@
 				bias-disable;
 			};
 		};
+		qupv3_se4_spi_sleep_cs: qupv3_se4_spi_sleep_cs {
+				mux {
+					pins = "gpio19";
+					function = "gpio";
+				};
+
+				config {
+					pins = "gpio19";
+					drive-strength = <6>;
+					bias-pull-up;
+				};
+			};
 	};
 
 	qupv3_se5_i2c_pins: qupv3_se5_i2c_pins {
@@ -1643,7 +1655,7 @@
 			};
 		};
 	};
-
+/*
 	qupv3_se10_spi_pins: qupv3_se10_spi_pins {
 		qupv3_se10_spi_active: qupv3_se10_spi_active {
 			mux {
@@ -1673,6 +1685,34 @@
 				drive-strength = <6>;
 				bias-disable;
 			};
+		};
+	};
+*/
+	haptic_irq_l: haptic_irq_l {
+		mux {
+			pins = "gpio38";
+			function = "gpio";
+		};
+
+		config {
+			pins = "gpio38";
+			drive-strength = <2>;
+			bias-pull-up;
+			input-enable;
+		};
+	};
+
+	haptic_irq_r: haptic_irq_r {
+		mux {
+			pins = "gpio171";
+			function = "gpio";
+		};
+
+		config {
+			pins = "gpio171";
+			drive-strength = <2>;
+			bias-pull-up;
+			input-enable;
 		};
 	};
 

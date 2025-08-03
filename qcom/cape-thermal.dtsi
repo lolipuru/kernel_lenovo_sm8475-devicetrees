@@ -188,6 +188,28 @@
 		interconnects = <&mc_virt MASTER_LLCC &mc_virt SLAVE_EBI1>;
 	};
 
+	sys_temp_support {
+		compatible = "lenovo,sys-temp";
+		lenovo,temperature-names = "front_temp",
+			"back_temp",
+			"user_front_temp",
+			"user_back_temp";
+		lenovo,sensor-listener-names = "skin-msm-therm",
+			"camera-therm",
+			"hot-pock-therm",
+			"rear-cam-therm",
+			"tof-therm",
+			"fan0-therm",
+			"sub-conn-therm",
+			"fan1-therm",
+			"pa-therm",
+			"pa-therm2",
+			"wifi-therm",
+			"conn-therm",
+			"xo-therm";
+		//status = "ok";
+	};
+
 	qcom,limits-dcvs {
 		compatible = "qcom,msm-hw-limits";
 		isens_vref_0p8-supply = <&pm8350_l5_ao>;
@@ -1489,3 +1511,16 @@
 		};
 	};
 };
+
+
+&soc {
+	lenovo-thermal {
+		compatible = "lenovo,thermal";
+		qcom,thermal-mitigation-display-rate = <0 1 2 3 4>;
+		qcom,thermal-mitigation-speaker = <0 1 2 3 4>;
+		qcom,thermal-mitigation-modem-5g = <0 1 2 3 4>;
+		qcom,thermal-mitigation-camera = <0 1 2 3 4>;
+		qcom,thermal-mitigation-event = <0 1 2 3 4>;
+	};
+};
+
