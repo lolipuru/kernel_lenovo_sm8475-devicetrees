@@ -4,9 +4,9 @@
 	qcom,num-macros = <4>;
 };
 
-&wsa2_macro {
+/*&wsa2_macro {
 	status = "disabled";
-};
+};*/
 
 &swr_dmic_01 {
 	status = "disabled";
@@ -24,9 +24,6 @@
 	status = "disabled";
 };
 
-&cdc_tert_mi2s_gpios {
-	status = "ok";
-};
 
 &waipio_snd {
 	qcom,model = "waipio-cdp-snd-card";
@@ -104,13 +101,11 @@
 		"VA DMIC7", "VA MIC BIAS3";
 	qcom,cdc-dmic67-gpios = <&cdc_dmic67_gpios>;
 	asoc-codec  = <&stub_codec>, <&lpass_cdc>,
-			<&wcd938x_codec>, <&swr_haptics>,
-			<&wsa883x_0221>, <&wsa883x_0222>;
+			<&wcd938x_codec>, <&swr_haptics>;
 	asoc-codec-names = "msm-stub-codec.1", "lpass-cdc",
-			"wcd938x_codec", "swr-haptics",
-			"wsa-codec1", "wsa-codec2";
-	qcom,wsa-max-devs = <2>;
+			"wcd938x_codec", "swr-haptics";
+	qcom,wsa-max-devs = <0>;
 
-	qcom,tert-mi2s-gpios = <&cdc_tert_mi2s_gpios>;
+	//qcom,tert-mi2s-gpios = <&cdc_tert_mi2s_gpios>;
 };
 
