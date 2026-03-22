@@ -292,7 +292,7 @@
 			<&clock_gcc GCC_QUPV3_WRAP_0_S_AHB_CLK>;
 		pinctrl-names = "default", "sleep";
 		pinctrl-0 = <&qupv3_se4_spi_active>;
-		pinctrl-1 = <&qupv3_se4_spi_sleep>;
+		pinctrl-1 = <&qupv3_se4_spi_sleep &qupv3_se4_spi_sleep_cs>;
 		dmas = <&gpi_dma0 0 4 1 64 2>,
 			<&gpi_dma0 1 4 1 64 2>;
 		dma-names = "tx", "rx";
@@ -432,6 +432,7 @@
 		status = "ok";
 	};
 
+#if 0
 	qupv3_se8_i2c: i2c@a80000 {
 		compatible = "qcom,i2c-geni";
 		reg = <0xa80000 0x4000>;
@@ -473,6 +474,7 @@
 		qcom,wrapper-core = <&qupv3_1>;
 		status = "disabled";
 	};
+#endif
 
 	qupv3_se9_i2c: i2c@a84000 {
 		compatible = "qcom,i2c-geni";
@@ -535,7 +537,7 @@
 		qcom,wrapper-core = <&qupv3_1>;
 		status = "disabled";
 	};
-
+/*
 	qupv3_se10_spi: spi@a88000 {
 		compatible = "qcom,spi-geni";
 		reg = <0xa88000 0x4000>;
@@ -557,7 +559,7 @@
 		qcom,wrapper-core = <&qupv3_1>;
 		status = "disabled";
 	};
-
+*/
 	qupv3_se11_i2c: i2c@a8c000 {
 		compatible = "qcom,i2c-geni";
 		reg = <0xa8c000 0x4000>;
