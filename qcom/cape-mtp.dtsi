@@ -209,7 +209,7 @@
 		irq-gpio = <&tlmm 38 0>;//38
 		reset-gpio = <&tlmm 39 0>;//39
 		pinctrl-names = "haptic_irq_l";
-		pinctrl-0 = <&haptic_irq_l>;
+		pinctrl-0 = <&haptic_irq_l &haptic_rst_l>;
 		f0_pre = < 1700 >;
 		mode = /bits/ 8 < 5 >;
 		f0_cali_percent = /bits/ 8 < 7 >;

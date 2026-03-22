@@ -1702,6 +1702,20 @@
 		};
 	};
 
+	haptic_rst_l: haptic_rst_l {
+		mux {
+			pins = "gpio39";
+			function = "gpio";
+		};
+
+		config {
+			pins = "gpio39";
+			drive-strength = <2>;
+			bias-disable;
+			output-low;
+		};
+	};
+
 	haptic_irq_r: haptic_irq_r {
 		mux {
 			pins = "gpio171";
