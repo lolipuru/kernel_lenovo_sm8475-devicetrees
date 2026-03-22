@@ -8,7 +8,7 @@
 		regulator-min-microvolt = <5500000>;
 		regulator-max-microvolt = <5500000>;
 		regulator-enable-ramp-delay = <233>;
-		gpio = <&tlmm 186 0>;
+		gpio = <&tlmm 186 0>; //bias gpio
 		enable-active-high;
 		regulator-boot-on;
 		proxy-supply = <&display_panel_avdd>;
@@ -61,8 +61,8 @@
 			"mdp_core_clk";
 
 	vddio-supply = <&L12C>;
-	vci-supply = <&L13C>;
-	extvdd-supply = <&L1D>;
+	//vci-supply = <&L13C>;
+	//extvdd-supply = <&L1D>;
 };
 
 &sde_dsi1 {
@@ -90,8 +90,8 @@
 			"mdp_core_clk";
 
 	vddio-supply = <&L12C>;
-	vci-supply = <&L13C>;
-	extvdd-supply = <&L1D>;
+	//vci-supply = <&L13C>;
+	//extvdd-supply = <&L1D>;
 };
 
 &mdss_mdp {

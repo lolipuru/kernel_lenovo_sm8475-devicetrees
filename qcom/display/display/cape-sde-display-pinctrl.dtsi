@@ -1,4 +1,34 @@
 &tlmm {
+	pmx_bkl { //hwen
+	        bkl_init_active: bkl_init_active{
+			mux {
+				pins = "gpio62";
+				function = "gpio";
+			};
+
+			config {
+				pins = "gpio62";
+				drive-strength = <2>;
+				bias-pull-up; /* disable pull up & down */
+				output-high;
+			};
+		};
+
+	        bkl_init_suspend: bkl_init_suspend{
+			mux {
+				pins = "gpio62";
+				function = "gpio";
+			};
+
+			config {
+				pins = "gpio62";
+				drive-strength = <2>;
+				bias-pull-down; /* disable pull up & down */
+				output-low;
+			};
+		};
+	};
+
 	display_panel_avdd_default: display_panel_avdd_default {
 		mux {
 			pins = "gpio186";
