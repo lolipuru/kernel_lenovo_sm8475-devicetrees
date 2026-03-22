@@ -122,7 +122,7 @@
 			};
 		};
 
-		wsa_macro: wsa-macro@3240000 {
+/*		wsa_macro: wsa-macro@3240000 {
 			swr0: wsa_swr_master {
 			};
 		};
@@ -130,7 +130,7 @@
 		wsa2_macro: wsa2-macro@31E0000 {
 			swr3: wsa2_swr_master {
 			};
-		};
+		};*/
 	};
 
 	waipio_snd: sound {
@@ -152,5 +152,6 @@
 	swr1 = "/soc/spf_core_platform/lpass-cdc/rx-macro@3200000/rx_swr_master";
 	swr2 = "/soc/spf_core_platform/lpass-cdc/va-macro@33F0000/va_swr_master";
 	swr3 = "/soc/spf_core_platform/lpass-cdc/wsa2-macro@31E0000/wsa2_swr_master";
+	i2c3 = "/soc/i2c@a94000";
 };
 
