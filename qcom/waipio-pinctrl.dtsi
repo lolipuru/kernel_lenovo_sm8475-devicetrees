@@ -1631,7 +1631,7 @@
 		};
 	};
 
-	pri_aux_pcm_clk {
+	pri_aux_pcm_clk: pri_aux_pcm_clk {
 		pri_aux_pcm_clk_sleep: pri_aux_pcm_clk_sleep {
 			mux {
 				pins = "gpio126";
@@ -1661,7 +1661,7 @@
 		};
 	};
 
-	pri_aux_pcm_sync {
+	pri_aux_pcm_sync: pri_aux_pcm_sync {
 		pri_aux_pcm_sync_sleep: pri_aux_pcm_sync_sleep {
 			mux {
 				pins = "gpio129";
@@ -1691,7 +1691,7 @@
 		};
 	};
 
-	pri_aux_pcm_din {
+	pri_aux_pcm_din: pri_aux_pcm_din {
 		pri_aux_pcm_din_sleep: pri_aux_pcm_din_sleep {
 			mux {
 				pins = "gpio127";
@@ -1720,7 +1720,7 @@
 		};
 	};
 
-	pri_aux_pcm_dout {
+	pri_aux_pcm_dout: pri_aux_pcm_dout {
 		pri_aux_pcm_dout_sleep: pri_aux_pcm_dout_sleep {
 			mux {
 				pins = "gpio128";
@@ -1749,7 +1749,7 @@
 		};
 	};
 
-	tert_aux_pcm {
+	tert_aux_pcm: tert_aux_pcm {
 		tert_aux_pcm_clk_sleep: tert_aux_pcm_clk_sleep {
 			mux {
 				pins = "gpio121";
@@ -1807,7 +1807,7 @@
 		};
 	};
 
-	tert_aux_pcm_din {
+	tert_aux_pcm_din: tert_aux_pcm_din {
 		tert_aux_pcm_din_sleep: tert_aux_pcm_din_sleep {
 			mux {
 				pins = "gpio122";
@@ -1836,7 +1836,7 @@
 		};
 	};
 
-	tert_aux_pcm_dout {
+	tert_aux_pcm_dout: tert_aux_pcm_dout {
 		tert_aux_pcm_dout_sleep: tert_aux_pcm_dout_sleep {
 			mux {
 				pins = "gpio124";
@@ -1865,7 +1865,7 @@
 		};
 	};
 
-	pri_tdm_clk {
+	pri_tdm_clk: pri_tdm_clk {
 		pri_tdm_clk_sleep: pri_tdm_clk_sleep {
 			mux {
 				pins = "gpio126";
@@ -1895,7 +1895,7 @@
 		};
 	};
 
-	pri_tdm_sync {
+	pri_tdm_sync: pri_tdm_sync {
 		pri_tdm_sync_sleep: pri_tdm_sync_sleep {
 			mux {
 				pins = "gpio129";
@@ -1925,7 +1925,7 @@
 		};
 	};
 
-	pri_tdm_din {
+	pri_tdm_din: pri_tdm_din {
 		pri_tdm_din_sleep: pri_tdm_din_sleep {
 			mux {
 				pins = "gpio127";
@@ -1954,7 +1954,7 @@
 		};
 	};
 
-	pri_tdm_dout {
+	pri_tdm_dout: pri_tdm_dout {
 		pri_tdm_dout_sleep: pri_tdm_dout_sleep {
 			mux {
 				pins = "gpio128";
@@ -1983,7 +1983,7 @@
 		};
 	};
 
-	tert_tdm {
+	tert_tdm: tert_tdm {
 		tert_tdm_clk_sleep: tert_tdm_clk_sleep {
 			mux {
 				pins = "gpio121";
@@ -2041,7 +2041,7 @@
 		};
 	};
 
-	tert_tdm_din {
+	tert_tdm_din: tert_tdm_din {
 		tert_tdm_din_sleep: tert_tdm_din_sleep {
 			mux {
 				pins = "gpio122";
@@ -2070,7 +2070,7 @@
 		};
 	};
 
-	tert_tdm_dout {
+	tert_tdm_dout: tert_tdm_dout {
 		tert_tdm_dout_sleep: tert_tdm_dout_sleep {
 			mux {
 				pins = "gpio124";
@@ -2099,7 +2099,7 @@
 		};
 	};
 
-	pri_mi2s_mclk {
+	pri_mi2s_mclk: pri_mi2s_mclk {
 		pri_mi2s_mclk_sleep: pri_mi2s_mclk_sleep {
 			mux {
 				pins = "gpio125";
@@ -2129,7 +2129,7 @@
 		};
 	};
 
-	pri_mi2s_sck {
+	pri_mi2s_sck: pri_mi2s_sck {
 		pri_mi2s_sck_sleep: pri_mi2s_sck_sleep {
 			mux {
 				pins = "gpio126";
@@ -2159,7 +2159,7 @@
 		};
 	};
 
-	pri_mi2s_ws {
+	pri_mi2s_ws: pri_mi2s_ws {
 		pri_mi2s_ws_sleep: pri_mi2s_ws_sleep {
 			mux {
 				pins = "gpio129";
@@ -2189,7 +2189,7 @@
 		};
 	};
 
-	pri_mi2s_sd0 {
+	pri_mi2s_sd0: pri_mi2s_sd0 {
 		pri_mi2s_sd0_sleep: pri_mi2s_sd0_sleep {
 			mux {
 				pins = "gpio127";
@@ -2219,7 +2219,7 @@
 		};
 	};
 
-	pri_mi2s_sd1 {
+	pri_mi2s_sd1: pri_mi2s_sd1 {
 		pri_mi2s_sd1_sleep: pri_mi2s_sd1_sleep {
 			mux {
 				pins = "gpio128";
@@ -2249,7 +2249,7 @@
 		};
 	};
 
-	sec_mi2s_mclk {
+	sec_mi2s_mclk: sec_mi2s_mclk {
 		sec_mi2s_mclk_sleep: sec_mi2s_mclk_sleep {
 			mux {
 				pins = "gpio124";
@@ -2279,7 +2279,7 @@
 		};
 	};
 
-	tert_mi2s_sck {
+	tert_mi2s_sck: tert_mi2s_sck {
 		tert_mi2s_sck_sleep: tert_mi2s_sck_sleep {
 			mux {
 				pins = "gpio121";
@@ -2308,7 +2308,7 @@
 		};
 	};
 
-	tert_mi2s_ws {
+	tert_mi2s_ws: tert_mi2s_ws {
 		tert_mi2s_ws_sleep: tert_mi2s_ws_sleep {
 			mux {
 				pins = "gpio123";
@@ -2337,7 +2337,7 @@
 		};
 	};
 
-	tert_mi2s_sd0 {
+	tert_mi2s_sd0: tert_mi2s_sd0 {
 		tert_mi2s_sd0_sleep: tert_mi2s_sd0_sleep {
 			mux {
 				pins = "gpio122";
@@ -2366,7 +2366,7 @@
 		};
 	};
 
-	tert_mi2s_sd1 {
+	tert_mi2s_sd1: tert_mi2s_sd1 {
 		tert_mi2s_sd1_sleep: tert_mi2s_sd1_sleep {
 			mux {
 				pins = "gpio124";
@@ -2424,7 +2424,7 @@
 	};
 
 	/* WSA speaker reset pins */
-	spkr_1_sd_n {
+	spkr_1_sd_n: spkr_1_sd_n {
 		spkr_1_sd_n_sleep: spkr_1_sd_n_sleep {
 			mux {
 				pins = "gpio1";
@@ -2454,7 +2454,7 @@
 		};
 	};
 
-	spkr_2_sd_n {
+	spkr_2_sd_n: spkr_2_sd_n {
 		spkr_2_sd_n_sleep: spkr_2_sd_n_sleep {
 			mux {
 				pins = "gpio89";
@@ -2484,7 +2484,7 @@
 		};
 	};
 
-	spkr2_1_sd_n {
+	spkr2_1_sd_n: spkr2_1_sd_n {
 		spkr2_1_sd_n_sleep: spkr2_1_sd_n_sleep {
 			mux {
 				pins = "gpio71";
@@ -2514,7 +2514,7 @@
 		};
 	};
 
-	spkr2_2_sd_n {
+	spkr2_2_sd_n: spkr2_2_sd_n {
 		spkr2_2_sd_n_sleep: spkr2_2_sd_n_sleep {
 			mux {
 				pins = "gpio3";
