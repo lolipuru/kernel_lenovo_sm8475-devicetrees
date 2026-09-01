@@ -122,7 +122,7 @@
 			};
 		};
 
-/*		wsa_macro: wsa-macro@3240000 {
+		wsa_macro: wsa-macro@3240000 {
 			swr0: wsa_swr_master {
 			};
 		};
@@ -130,7 +130,7 @@
 		wsa2_macro: wsa2-macro@31E0000 {
 			swr3: wsa2_swr_master {
 			};
-		};*/
+		};
 	};
 
 	waipio_snd: sound {
